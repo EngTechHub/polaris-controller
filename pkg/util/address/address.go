@@ -119,13 +119,6 @@ func GetAddressMapFromEndpoints(service *v1.Service, endpoint *v1.Endpoints,
 			}
 		}
 
-		// 如果不需要优雅同步，就不把notReadyAddress加入的同步列表里面。
-		for _, notReadyAds := range subset.NotReadyAddresses {
-			addresses := buildAddresses(&notReadyAds, &subset, hasIndex, podLister, defaultWeight, indexPortMap)
-			for k, v := range addresses {
-				instanceSet[k] = v
-			}
-		}
 	}
 
 	return instanceSet
