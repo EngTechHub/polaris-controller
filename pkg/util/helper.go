@@ -159,6 +159,9 @@ func IgnoreService(svc *v1.Service) bool {
 
 	// 没有设置 selector，polaris controller 不处理
 	if svc.Spec.Selector == nil {
+		if svc.GetAnnotations()["k8s.pjlab.org.cn/polaris-external-service"] == "true" {
+			return false
+		}
 		log.Infof("forbidden sync to polaris: Service %s/%s has no selectors", svc.GetNamespace(), svc.GetName())
 		return true
 	}
